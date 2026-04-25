@@ -259,7 +259,7 @@ Used for: UK-specific job listings from [reed.co.uk](https://www.reed.co.uk), on
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/the-jobify-portal.git
+git clone https://github.com/AJ-Dev-Labs/jobify.git
 cd the-jobify-portal
 
 # 2. Install dependencies
