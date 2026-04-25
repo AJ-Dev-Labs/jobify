@@ -36,7 +36,7 @@ The job market in 2026 is noisier than ever. AI-generated job postings flood eve
 
 **The Jobify Portal takes the opposite approach:**
 
-- **Semantic understanding over keyword matching.** Your resume is converted into a 1536-dimensional vector that captures the *meaning* of your experience — not just the words. A job posting about "distributed infrastructure" will match a resume describing "building scalable microservices" even if those exact words never overlap.
+- **Semantic understanding over keyword matching.** Your resume is converted into a 1536-dimensional vector that captures the _meaning_ of your experience — not just the words. A job posting about "distributed infrastructure" will match a resume describing "building scalable microservices" even if those exact words never overlap.
 
 - **Your data stays on your machine.** No account, no cloud storage, no analytics pipeline. Everything — your resume text, extracted profile, job results, and API keys — is stored locally in your OS app data directory using `electron-store`. The only outbound calls are to the APIs you configure.
 
@@ -66,15 +66,13 @@ At a time when most job tools optimize for volume, this tool optimizes for preci
 
 ## Screenshots
 
-> Add screenshots to a `screenshots/` folder and update the paths below.
+| Setup                                  | Upload                                   |
+| -------------------------------------- | ---------------------------------------- |
+| ![Setup screen](screenshots/Setup.jpg) | ![Upload screen](screenshots/Upload.jpg) |
 
-| Setup | Upload |
-|-------|--------|
-| ![Setup screen](screenshots/setup.png) | ![Upload screen](screenshots/upload.png) |
-
-| Skills | Jobs |
-|--------|------|
-| ![Skills screen](screenshots/skills.png) | ![Jobs screen](screenshots/jobs.png) |
+| Skills                                   | Jobs                                 |
+| ---------------------------------------- | ------------------------------------ |
+| ![Skills screen](screenshots/Skills.jpg) | ![Jobs screen](screenshots/Jobs.jpg) |
 
 ---
 
@@ -89,6 +87,7 @@ Score = (Semantic × 0.40) + (Skill Overlap × 0.30) + (Experience × 0.15) + (L
 ### Signal Breakdown
 
 #### 1. Semantic Similarity (40%)
+
 Both your resume profile and the job description are embedded using OpenAI's `text-embedding-3-small` model into 1536-dimensional vectors. The **cosine similarity** between these vectors is computed:
 
 ```
@@ -98,6 +97,7 @@ cosine(A, B) = (A · B) / (|A| × |B|)
 This captures conceptual alignment — "distributed systems architect" and "platform infrastructure lead" will score high even with zero keyword overlap.
 
 #### 2. Skill Overlap (30%)
+
 The ratio of your active (enabled) skills that appear in the job title and description:
 
 ```
@@ -107,12 +107,15 @@ Skill Overlap = matched_skills / total_active_skills
 You can toggle skills on the Skills screen to recalibrate this signal before running a search.
 
 #### 3. Experience Match (15%)
+
 A binary/heuristic signal based on whether your extracted years of experience is above zero. Returns `1.0` for profiles with work history, `0.6` for profiles where experience could not be determined.
 
 #### 4. Location Match (10%)
+
 Remote jobs score `1.0`. On-site or hybrid jobs score `0.7`. This rewards remote-eligible roles while still surfacing strong on-site matches.
 
 #### 5. Salary Alignment (5%)
+
 Jobs that include a salary range score `0.85`. Jobs with no salary data score `0.5`. This is a low-weight signal that gently ranks transparent job postings higher.
 
 ### Why These Weights?
@@ -128,17 +131,17 @@ The weights reflect a deliberate priority ordering:
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Desktop shell | Electron 30 |
-| Frontend | React 18 + TypeScript 5.6 |
-| Build tooling | Vite 5 + vite-plugin-electron |
-| Styling | Tailwind CSS 3 |
-| Routing | React Router 6 |
-| PDF parsing | pdf-parse |
-| AI / Embeddings | OpenAI SDK (`gpt-4o-mini`, `text-embedding-3-small`) |
-| Local storage | electron-store (JSON, OS app data dir) |
-| Job sources | RemoteOK API, JSearch (RapidAPI), Adzuna API, Reed API |
+| Layer           | Technology                                             |
+| --------------- | ------------------------------------------------------ |
+| Desktop shell   | Electron 30                                            |
+| Frontend        | React 18 + TypeScript 5.6                              |
+| Build tooling   | Vite 5 + vite-plugin-electron                          |
+| Styling         | Tailwind CSS 3                                         |
+| Routing         | React Router 6                                         |
+| PDF parsing     | pdf-parse                                              |
+| AI / Embeddings | OpenAI SDK (`gpt-4o-mini`, `text-embedding-3-small`)   |
+| Local storage   | electron-store (JSON, OS app data dir)                 |
+| Job sources     | RemoteOK API, JSearch (RapidAPI), Adzuna API, Reed API |
 
 ---
 
@@ -148,21 +151,21 @@ Before installing, make sure you have the following on your system:
 
 ### Required
 
-| Requirement | Minimum Version | Check |
-|-------------|----------------|-------|
-| [Node.js](https://nodejs.org/) | 18.0.0 | `node --version` |
-| npm | 9.0.0 | `npm --version` |
-| Git | Any | `git --version` |
+| Requirement                    | Minimum Version | Check            |
+| ------------------------------ | --------------- | ---------------- |
+| [Node.js](https://nodejs.org/) | 18.0.0          | `node --version` |
+| npm                            | 9.0.0           | `npm --version`  |
+| Git                            | Any             | `git --version`  |
 
 > **Note:** Node 18 is required because the main process uses the built-in `fetch` API and native ESM modules. Node 16 will not work.
 
 ### Operating System
 
-| Platform | Support |
-|----------|---------|
-| Windows 10 / 11 | ✅ Fully supported |
-| macOS 12+ | ✅ Fully supported |
-| Linux (Ubuntu 20.04+) | ✅ Supported |
+| Platform              | Support            |
+| --------------------- | ------------------ |
+| Windows 10 / 11       | ✅ Fully supported |
+| macOS 12+             | ✅ Fully supported |
+| Linux (Ubuntu 20.04+) | ✅ Supported       |
 
 ---
 
@@ -243,12 +246,12 @@ Used for: UK-specific job listings from [reed.co.uk](https://www.reed.co.uk), on
 
 ### Summary Table
 
-| Key | Required | Free Tier | Best For |
-|-----|----------|-----------|---------|
-| OpenAI | ✅ Yes | Pay-per-use (~$0.10/resume) | Core functionality |
-| RapidAPI (JSearch) | ❌ Optional | 200 req/month | Global coverage |
-| Adzuna | ❌ Optional | 250 req/month | India, Germany, UK, AU, JP |
-| Reed | ❌ Optional | Free | UK-only deep listings |
+| Key                | Required    | Free Tier                   | Best For                   |
+| ------------------ | ----------- | --------------------------- | -------------------------- |
+| OpenAI             | ✅ Yes      | Pay-per-use (~$0.10/resume) | Core functionality         |
+| RapidAPI (JSearch) | ❌ Optional | 200 req/month               | Global coverage            |
+| Adzuna             | ❌ Optional | 250 req/month               | India, Germany, UK, AU, JP |
+| Reed               | ❌ Optional | Free                        | UK-only deep listings      |
 
 ---
 
@@ -274,6 +277,7 @@ npm run dev
 ```
 
 This starts:
+
 - **Vite dev server** on `http://localhost:5173` (hot module replacement for the renderer)
 - **Electron main process** watching for changes (rebuilds on save)
 - The **Electron window** opens automatically
@@ -297,6 +301,7 @@ npm run build
 ```
 
 Outputs to:
+
 - `dist/` — compiled renderer (React app)
 - `dist-electron/` — compiled main process and preload
 
@@ -308,11 +313,11 @@ npm run package
 
 This runs `electron-builder` and produces a platform-native installer in the `release/` folder:
 
-| Platform | Output |
-|----------|--------|
-| Windows | `.exe` NSIS installer |
-| macOS | `.dmg` disk image |
-| Linux | `.AppImage` |
+| Platform | Output                |
+| -------- | --------------------- |
+| Windows  | `.exe` NSIS installer |
+| macOS    | `.dmg` disk image     |
+| Linux    | `.AppImage`           |
 
 > **First-time packaging on macOS** may require Xcode Command Line Tools: `xcode-select --install`
 
@@ -414,17 +419,18 @@ the-jobify-portal/
 
 All data processed by this app stays on your machine:
 
-| Data | Where it lives | Leaves your machine? |
-|------|---------------|----------------------|
-| Resume PDF | Only read temporarily, never copied | No |
-| Extracted profile (skills, experience) | `electron-store` in OS app data | No |
-| Resume embedding vector | `electron-store` in OS app data | No |
-| Job results + scores | `electron-store` in OS app data | No |
-| API keys | `electron-store` in OS app data | No — only used as credentials in outbound API calls |
-| Resume text | Sent to OpenAI for extraction | Yes — to `api.openai.com` only |
-| Job descriptions | Sent to OpenAI for embedding | Yes — to `api.openai.com` only |
+| Data                                   | Where it lives                      | Leaves your machine?                                |
+| -------------------------------------- | ----------------------------------- | --------------------------------------------------- |
+| Resume PDF                             | Only read temporarily, never copied | No                                                  |
+| Extracted profile (skills, experience) | `electron-store` in OS app data     | No                                                  |
+| Resume embedding vector                | `electron-store` in OS app data     | No                                                  |
+| Job results + scores                   | `electron-store` in OS app data     | No                                                  |
+| API keys                               | `electron-store` in OS app data     | No — only used as credentials in outbound API calls |
+| Resume text                            | Sent to OpenAI for extraction       | Yes — to `api.openai.com` only                      |
+| Job descriptions                       | Sent to OpenAI for embedding        | Yes — to `api.openai.com` only                      |
 
 The store file location:
+
 - **Windows:** `%APPDATA%\the-jobify-portal\config.json`
 - **macOS:** `~/Library/Application Support/the-jobify-portal/config.json`
 - **Linux:** `~/.config/the-jobify-portal/config.json`
@@ -467,4 +473,4 @@ MIT — see [LICENSE](LICENSE) for details.
 
 Full privacy policy: [PRIVACY.md](PRIVACY.md)
 
-*No servers. No accounts. No telemetry. Your data stays on your machine.*
+_No servers. No accounts. No telemetry. Your data stays on your machine._
